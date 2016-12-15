@@ -2,7 +2,7 @@
 FROM centos:7
 MAINTAINER billypon
 
-RUN useradd -s /sbin/nologin -d /dev/null -M www -r -u 997 -g 997
+RUN useradd -s /sbin/nologin -d /dev/null -M www
 RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN ln -s service /sbin/start
 RUN ln -s service /sbin/stop
