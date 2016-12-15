@@ -2,13 +2,6 @@
 FROM centos:7
 MAINTAINER billypon
 
-RUN useradd -s /sbin/nologin -d /dev/null -M www
-RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-RUN ln -s service /sbin/start
-RUN ln -s service /sbin/stop
-RUN ln -s service /sbin/restart
-RUN ln -s service /sbin/status
-
 RUN yum install -y epel-release sudo
 RUN yum install -y make gcc
 
@@ -44,6 +37,14 @@ RUN yum install -y mono xsp
 RUN yum install -y redis
 RUN mkdir /home/redis
 RUN chown redis:redis /home/redis
+
+# system
+RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN useradd -s /sbin/nologin -d /dev/null -M www
+RUN ln -s service /sbin/start
+RUN ln -s service /sbin/stop
+RUN ln -s service /sbin/restart
+RUN ln -s service /sbin/status
 
 # fix
 RUN echo 'LC_ALL="POSIX"' >> /etc/locale.conf
