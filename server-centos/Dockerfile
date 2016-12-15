@@ -43,8 +43,7 @@ RUN yum install -y mono xsp
 # redis
 RUN yum install -y redis
 RUN mkdir /home/redis
-RUN chown redis:www /home/redis
-RUN gpasswd -a redis www
+RUN chown redis:redis /home/redis
 
 # fix
 RUN echo 'LC_ALL="POSIX"' >> /etc/locale.conf
