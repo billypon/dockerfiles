@@ -26,7 +26,6 @@ RUN rm -rf /tmp/ZendGuardLoader*
 # redis
 RUN yum install -y redis
 RUN mkdir /home/redis
-RUN chown redis:redis /home/redis
 
 # node
 RUN curl --silent --location https://rpm.nodesource.com/setup_6.x | bash -
@@ -46,12 +45,7 @@ RUN useradd -s /sbin/nologin -d /dev/null -M www
 RUN ln -s /usr/lib/systemd/system/boot.service /etc/systemd/system/multi-user.target.wants/boot.service
 RUN ln -s /usr/lib/systemd/system/php-fpm.service /etc/systemd/system/multi-user.target.wants/php-fpm.service
 RUN ln -s /usr/lib/systemd/system/redis.service /etc/systemd/system/multi-user.target.wants/redis.service
-RUN rm /etc/systemd/system/multi-user.target.wants/sendmail.service
-RUN rm /etc/systemd/system/multi-user.target.wants/sm-clientservice
-RUN ln -s service /sbin/start
-RUN ln -s service /sbin/stop
-RUN ln -s service /sbin/restart
-RUN ln -s service /sbin/status
+RUN rm /etc/systemd/system/multi-user.target.wants/sendmail.service /etc/systemd/system/multi-user.target.wants/sm-clientservice
 
 # fix
 RUN echo 'LC_ALL="POSIX"' >> /etc/locale.conf
