@@ -46,6 +46,9 @@ RUN ln -s /usr/lib/systemd/system/boot.service /etc/systemd/system/multi-user.ta
 RUN ln -s /usr/lib/systemd/system/php-fpm.service /etc/systemd/system/multi-user.target.wants/php-fpm.service
 RUN ln -s /usr/lib/systemd/system/redis.service /etc/systemd/system/multi-user.target.wants/redis.service
 RUN rm /etc/systemd/system/multi-user.target.wants/sendmail.service /etc/systemd/system/multi-user.target.wants/sm-clientservice
+RUN rm /etc/systemd/system/multi-user.target.wants/sendmail.service /etc/systemd/system/multi-user.target.wants/sm-clientservice
+RUN sed -i "/PrivateTmp/d" /etc/systemd/system/multi-user.target.wants/php-fpm.service
+RUN sed -i "/\(User\|Group\)/d" /usr/lib/systemd/system/redis.service
 
 # fix
 RUN echo 'LC_ALL="POSIX"' >> /etc/locale.conf
