@@ -23,9 +23,16 @@ RUN tar zxvf /tmp/ZendGuardLoader.tar.gz -C /tmp
 RUN cd /tmp/ZendGuardLoader-*/php-* && cp ZendGuardLoader.so /usr/lib64/php/modules
 RUN rm -rf /tmp/ZendGuardLoader*
 
+# redis
+RUN yum install -y redis
+RUN mkdir /home/redis
+RUN chown redis:redis /home/redis
+
 # node
 RUN curl --silent --location https://rpm.nodesource.com/setup_6.x | bash -
 RUN yum install -y nodejs
+
+# dotnet(/usr/lib/dotnet)
 
 # mono
 RUN yum install -y yum-utils
@@ -33,14 +40,14 @@ RUN rpm --import "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3FA7E03
 RUN yum-config-manager --add-repo http://download.mono-project.com/repo/centos/
 RUN yum install -y mono xsp
 
-# redis
-RUN yum install -y redis
-RUN mkdir /home/redis
-RUN chown redis:redis /home/redis
-
 # system
 RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN useradd -s /sbin/nologin -d /dev/null -M www
+RUN ln -s /usr/lib/systemd/system/boot.service /etc/systemd/system/multi-user.target.wants/boot.service
+RUN ln -s /usr/lib/systemd/system/php-fpm.service /etc/systemd/system/multi-user.target.wants/php-fpm.service
+RUN ln -s /usr/lib/systemd/system/redis.service /etc/systemd/system/multi-user.target.wants/redis.service
+RUN rm /etc/systemd/system/multi-user.target.wants/sendmail.service
+RUN rm /etc/systemd/system/multi-user.target.wants/sm-clientservice
 RUN ln -s service /sbin/start
 RUN ln -s service /sbin/stop
 RUN ln -s service /sbin/restart
@@ -54,4 +61,4 @@ RUN yum autoremove -y make gcc php-devel
 RUN yum autoremove -y
 RUN yum clean all
 
-ENTRYPOINT ["/sbin/main"]
+ENTRYPOINT ["/sbin/init"]
