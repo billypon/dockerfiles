@@ -40,9 +40,9 @@ RUN yum install -y mono xsp
 RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN useradd -s /sbin/nologin -d /dev/null -M www
 RUN sed -i "/PrivateTmp/d" /usr/lib/systemd/system/php-fpm.service
-RUN ln -s /usr/lib/systemd/system/boot.service /etc/systemd/system/multi-user.target.wants/boot.service
-RUN ln -s /usr/lib/systemd/system/php-fpm.service /etc/systemd/system/multi-user.target.wants/php-fpm.service
-RUN ln -s /usr/lib/systemd/system/redis.service /etc/systemd/system/multi-user.target.wants/redis.service
+RUN ln -s /usr/lib/systemd/system/boot.service /etc/systemd/system/multi-user.target.wants
+RUN ln -s /usr/lib/systemd/system/php-fpm.service /etc/systemd/system/multi-user.target.wants
+RUN ln -s /usr/lib/systemd/system/redis.service /etc/systemd/system/multi-user.target.wants
 
 # fix
 RUN echo 'LC_ALL="POSIX"' >> /etc/locale.conf
