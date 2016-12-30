@@ -41,7 +41,7 @@ RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN useradd -s /sbin/nologin -d /dev/null -M www
 RUN sed -i "/PrivateTmp/d" /usr/lib/systemd/system/php-fpm.service
 RUN rm -f /etc/systemd/system/multi-user.target.wants/{sendmail,sm-client}.service
-RUN for x in `echo init php-fpm redis`; do ln -s /usr/lib/systemd/system/$x /etc/systemd/system/multi-user.target.wants/; done
+RUN for x in `echo init php-fpm redis`; do ln -s /usr/lib/systemd/system/${x}.service /etc/systemd/system/multi-user.target.wants/; done
 
 # fix
 RUN echo 'LC_ALL="POSIX"' >> /etc/locale.conf
