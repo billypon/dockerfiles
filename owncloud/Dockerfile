@@ -2,7 +2,7 @@
 FROM centos:7
 MAINTAINER billypon
 
-# system
+# init
 RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 # install
