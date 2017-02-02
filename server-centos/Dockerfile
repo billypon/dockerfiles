@@ -2,6 +2,10 @@
 FROM centos:7
 MAINTAINER billypon
 
+# init
+RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN rm -f /etc/systemd/system/multi-user.target.wants/{sendmail,sm-client}.service
+
 RUN yum install -y epel-release sudo
 RUN yum install -y make gcc
 
@@ -10,11 +14,14 @@ RUN yum install -y php php-fpm php-devel
 RUN yum install -y php-bcmath php-gd php-json php-mbstring php-mcrypt php-xml php-xmlrpc php-soap
 RUN yum install -y php-mysql php-pecl-redis
 RUN yum install -y ImageMagick php-pecl-imagick sendmail
+# fix for sendmail
+RUN echo 'LC_ALL="POSIX"' >> /etc/locale.conf
 
 # php: eaccelerator
 Add https://github.com/eaccelerator/eaccelerator/tarball/master /tmp/eaccelerator.tar.gz
 RUN tar zxvf /tmp/eaccelerator.tar.gz -C /tmp
 RUN cd /tmp/eaccelerator-* && phpize && ./configure && make && make install
+RUN sed -i "/PrivateTmp/d" /usr/lib/systemd/system/php-fpm.service
 
 # php: zend guard loader
 ADD http://downloads.zend.com/guard/6.0.0/ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz /tmp/ZendGuardLoader.tar.gz
@@ -37,14 +44,8 @@ RUN yum-config-manager --add-repo http://download.mono-project.com/repo/centos/
 RUN yum install -y mono xsp
 
 # system
-RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN useradd -s /sbin/nologin -d /dev/null -M www
-RUN sed -i "/PrivateTmp/d" /usr/lib/systemd/system/php-fpm.service
-RUN rm -f /etc/systemd/system/multi-user.target.wants/{sendmail,sm-client}.service
 RUN for x in `echo init php-fpm redis`; do ln -s /usr/lib/systemd/system/${x}.service /etc/systemd/system/multi-user.target.wants/; done
-
-# fix
-RUN echo 'LC_ALL="POSIX"' >> /etc/locale.conf
 
 # clean
 RUN yum autoremove -y make gcc php-devel
