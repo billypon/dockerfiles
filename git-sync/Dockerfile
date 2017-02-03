@@ -12,7 +12,11 @@ RUN yum install -y git crontabs
 RUN yum autoremove -y
 RUN yum clean all
 
+# script
+ADD git-sync /bin/
+
 # cron
 RUN touch /var/log/cron.log
 
+VOLUME ["/git"]
 CMD crond && tail -f /var/log/cron.log
