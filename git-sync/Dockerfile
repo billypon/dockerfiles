@@ -5,4 +5,4 @@ RUN apk add --no-cache openssh-client git
 ADD git-sync /bin/
 
 VOLUME ["/home/git"]
-CMD ["/bin/git-sync", "-d"]
+CMD ["/bin/git-sync", "-dc"]
