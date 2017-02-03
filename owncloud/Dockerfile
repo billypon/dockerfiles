@@ -6,6 +6,7 @@ MAINTAINER billypon
 RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 # install
+RUN yum install -y epel-release
 RUN yum install -y owncloud-nginx redis php-redis
 
 # clean
