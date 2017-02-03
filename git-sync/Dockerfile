@@ -7,4 +7,4 @@ ADD git-sync /bin/
 
 WORKDIR /home/git
 VOLUME ["/home/git"]
-CMD ["git-sync", "-dc"]
+ENTRYPOINT ["git-sync", "-dc"]
