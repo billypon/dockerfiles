@@ -4,7 +4,6 @@ MAINTAINER billypon
 
 # init
 RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-RUN rm -f /etc/systemd/system/multi-user.target.wants/{sendmail,sm-client}.service
 
 RUN yum install -y epel-release sudo
 RUN yum install -y make gcc
@@ -45,6 +44,7 @@ RUN yum install -y mono xsp
 
 # system
 RUN useradd -s /sbin/nologin -d /dev/null -M www
+RUN rm -f /etc/systemd/system/multi-user.target.wants/{sendmail,sm-client}.service
 RUN for x in `echo init php-fpm redis`; do ln -s /usr/lib/systemd/system/${x}.service /etc/systemd/system/multi-user.target.wants/; done
 
 # clean
