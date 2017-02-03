@@ -1,22 +1,8 @@
-# https://hub.docker.com/_/centos/
-FROM centos:7
+FROM alpine:3.5
 MAINTAINER billypon
 
-# init
-RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-
-# install
-RUN yum install -y git crontabs
-
-# clean
-RUN yum autoremove -y
-RUN yum clean all
-
-# script
+RUN apk add --no-cache openssh-client git
 ADD git-sync /bin/
 
-# cron
-RUN touch /var/log/cron.log
-
-VOLUME ["/git"]
-CMD crond && tail -f /var/log/cron.log
+VOLUME ["/home/git"]
+CMD ["/bin/git-sync", "-d"]

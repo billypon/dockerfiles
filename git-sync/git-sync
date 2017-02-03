@@ -1,17 +1,10 @@
-#!/bin/bash
+#!/bin/sh
 
-prefix=/git
+prefix=/home/git
 
-filename()
-{
-	filename=`basename $1`
-	echo ${filename%.*}
-}
-
-sync-repo()
+sync_repo()
 {
 	repo=$1
-	[ "$dir" ] || dir=$(filename $repo)
 	dir=$prefix/$2
 	[ -d $dir ] || git clone --mirror $repo $dir
 	echo -n "$2: "
