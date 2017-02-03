@@ -24,6 +24,6 @@ ADD php-fpm.d/ /etc/
 
 # owncloud
 RUN mkdir -p /var/lib/php/session
-chown root.root -R /etc/owncloud/ /var/lib/owncloud/ /var/lib/php/session
+RUN chown root.root -R /etc/owncloud/ /var/lib/owncloud/ /var/lib/php/session
 
 CMD /bin/bash
