@@ -1,7 +1,6 @@
-FROM alpine:3.5
+FROM billypon/alpine:3.5
 MAINTAINER billypon
 
-ADD localtime /etc/localtime
 RUN apk add --no-cache openssh-client git
 ADD git-sync /bin/
 
