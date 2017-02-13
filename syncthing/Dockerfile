@@ -8,4 +8,4 @@ RUN apk add --no-cache syncthing && \
 WORKDIR /home/syncthing
 EXPOSE 8384 22000 21027/udp
 VOLUME ["/home/syncthing"]
-ENTRYPOINT ["syncthing", "-logflags=3"]
+CMD ["syncthing", "-logflags=3"]
