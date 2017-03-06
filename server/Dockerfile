@@ -4,6 +4,7 @@ MAINTAINER billypon
 # init
 RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
+# install
 RUN yum install -y epel-release yum-utils make gcc && \
 
     # php
@@ -46,8 +47,8 @@ RUN yum install -y epel-release yum-utils make gcc && \
     yum clean all
 
 # system
-RUN useradd -s /sbin/nologin -d /dev/null -M www
-RUN rm -f /etc/systemd/system/multi-user.target.wants/{sendmail,sm-client}.service
-RUN for x in `echo init php-fpm redis`; do ln -s /usr/lib/systemd/system/${x}.service /etc/systemd/system/multi-user.target.wants/; done
+RUN useradd -s /sbin/nologin -d /dev/null -M www && \
+    rm -f /etc/systemd/system/multi-user.target.wants/{sendmail,sm-client}.service && \
+    for x in `echo init php-fpm redis`; do ln -s /usr/lib/systemd/system/${x}.service /etc/systemd/system/multi-user.target.wants/; done
 
 ENTRYPOINT ["/sbin/init"]
