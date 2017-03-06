@@ -9,7 +9,7 @@ RUN yum install -y epel-release yum-utils make gcc && \
     # php
     yum install -y php php-fpm php-devel \
                    php-bcmath php-gd php-json php-mbstring php-mcrypt php-xml php-xmlrpc php-soap \
-                   php-mysql php-pecl-redis
+                   php-mysql php-pecl-redis \
                    ImageMagick php-pecl-imagick && \
     sed -i "/PrivateTmp/d" /usr/lib/systemd/system/php-fpm.service && \
 
