@@ -22,9 +22,12 @@ RUN yum install -y epel-release yum-utils make gcc && \
     # php zend guard loader
     curl -sL http://downloads.zend.com/guard/6.0.0/ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz | tar zx -C /tmp && \
     cd /tmp/ZendGuardLoader-*/php-* && cp ZendGuardLoader.so /usr/lib64/php/modules && \
+    rm -rf /tmp/ZendGuardLoader-* && \
 
     # redis
     yum install -y redis && \
+    mkdir /tmp/redis && \
+    chown redis.redis /tmp/redis && \
 
     # node
     curl -sL https://rpm.nodesource.com/setup_6.x | bash && \
