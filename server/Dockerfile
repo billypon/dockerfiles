@@ -26,8 +26,6 @@ RUN yum install -y epel-release yum-utils make gcc && \
 
     # redis
     yum install -y redis && \
-    mkdir /tmp/redis && \
-    chown redis.redis /tmp/redis && \
 
     # node
     curl -sL https://rpm.nodesource.com/setup_6.x | bash && \
