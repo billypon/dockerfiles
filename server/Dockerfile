@@ -2,7 +2,8 @@ FROM centos:7
 MAINTAINER billypon
 
 # init
-RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+    useradd -s /sbin/nologin -d /dev/null -M www && \
 
 # install
 RUN yum install -y epel-release yum-utils make gcc && \
@@ -26,6 +27,7 @@ RUN yum install -y epel-release yum-utils make gcc && \
 
     # redis
     yum install -y redis && \
+    gpasswd -a redis www && \
 
     # node
     curl -sL https://rpm.nodesource.com/setup_6.x | bash && \
@@ -48,8 +50,7 @@ RUN yum install -y epel-release yum-utils make gcc && \
     yum clean all
 
 # system
-RUN useradd -s /sbin/nologin -d /dev/null -M www && \
-    rm -f /etc/systemd/system/multi-user.target.wants/{sendmail,sm-client}.service && \
+RUN rm -f /etc/systemd/system/multi-user.target.wants/{sendmail,sm-client}.service && \
     for x in `echo init php-fpm redis`; do ln -s /usr/lib/systemd/system/${x}.service /etc/systemd/system/multi-user.target.wants/; done
 
 ENTRYPOINT ["/sbin/init"]
