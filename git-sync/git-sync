@@ -12,10 +12,6 @@ sync_repo()
 	git remote update
 }
 
-date=
-scan=
-cron=
-
 OPTIND=1
 while getopts "dsc" opt; do
 	case $opt in
