@@ -3,7 +3,7 @@ MAINTAINER billypon
 
 # init
 RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    useradd -s /sbin/nologin -d /dev/null -M www && \
+    useradd -s /sbin/nologin -d /dev/null -M www
 
 # install
 RUN yum install -y epel-release yum-utils make gcc && \
