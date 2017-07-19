@@ -3,10 +3,26 @@ MAINTAINER billypon
 
 # init
 RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    useradd -s /sbin/nologin -d /dev/null -M www
+    useradd www
 
 # install
-RUN yum install -y epel-release yum-utils make gcc && \
+RUN yum install -y epel-release yum-utils make gcc autoconf automake && \
+
+    # fcgiwrap
+    yum install -y fcgi fcgi-devel && \
+    curl -sL https://github.com/gnosek/fcgiwrap/tarball/master | tar zx -C /tmp && \
+    cd /tmp/gnosek-fcgiwrap-* && autoreconf -i && ./configure && make && make install && \
+    rm -rf /tmp/gnosek-fcgiwrap-* && \
+
+    # spawn-fcgi
+	yum install -y spawn-fcgi && \
+    curl -sL https://github.com/lighttpd/spawn-fcgi/tarball/master | tar zx -C /tmp && \
+    cd /tmp/lighttpd-spawn-fcgi-*/src && \
+    sed -i 'N;/\n.*I will not set/!P;D' spawn-fcgi.c && sed -i '/I will not/{n;d}' spawn-fcgi.c && sed -i '/I will not/{n;d}' spawn-fcgi.c && sed -i '/I will not/d' spawn-fcgi.c && \
+	cd .. && \
+    ./autogen.sh && ./configure && make && cp src/spawn-fcgi /usr/bin/ && \
+    rm -rf /tmp/gnosek-fcgiwrap-* && \
+    chkconfig spawn-fcgi on && \
 
     # php
     yum install -y php php-fpm php-devel \
@@ -45,7 +61,7 @@ RUN yum install -y epel-release yum-utils make gcc && \
     echo 'LC_ALL="POSIX"' >> /etc/locale.conf && \
 
     # clean
-    yum autoremove -y epel-release yum-utils make gcc php-devel && \
+    yum autoremove -y epel-release yum-utils make gcc autoconf automake fcgi-devel php-devel && \
     yum autoremove -y && \
     yum clean all
 
