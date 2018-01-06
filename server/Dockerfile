@@ -15,11 +15,11 @@ RUN yum install -y epel-release yum-utils make gcc autoconf automake && \
     rm -rf /tmp/gnosek-fcgiwrap-* && \
 
     # spawn-fcgi
-	yum install -y spawn-fcgi && \
+    yum install -y spawn-fcgi && \
     curl -sL https://github.com/lighttpd/spawn-fcgi/tarball/master | tar zx -C /tmp && \
     cd /tmp/lighttpd-spawn-fcgi-*/src && \
     sed -i 'N;/\n.*I will not set/!P;D' spawn-fcgi.c && sed -i '/I will not/{n;d}' spawn-fcgi.c && sed -i '/I will not/{n;d}' spawn-fcgi.c && sed -i '/I will not/d' spawn-fcgi.c && \
-	cd .. && \
+    cd .. && \
     ./autogen.sh && ./configure && make && cp src/spawn-fcgi /usr/bin/ && \
     rm -rf /tmp/gnosek-fcgiwrap-* && \
     chkconfig spawn-fcgi on && \
