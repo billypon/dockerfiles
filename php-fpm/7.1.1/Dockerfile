@@ -1,7 +1,5 @@
-FROM php:fpm-alpine
+FROM php:7.1.1-fpm-alpine
 MAINTAINER billypon
-
-ADD localtime /etc/localtime
 
 RUN apk add --no-cache \
         libintl icu-libs libmcrypt libbz2 libpng libjpeg-turbo libwebp freetype \

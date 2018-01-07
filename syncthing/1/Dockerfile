@@ -1,4 +1,4 @@
-FROM billypon/alpine:3.5
+FROM alpine:3.5
 MAINTAINER billypon
 
 RUN apk add --no-cache syncthing && \

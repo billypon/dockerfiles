@@ -1,7 +1,7 @@
 FROM billypon/alpine:3.5
 MAINTAINER billypon
 
-RUN apk add --no-cache openssh-client git
+RUN apk add --no-cache git openssh-client
 ADD git-sync /bin/
 
 WORKDIR /home/git
