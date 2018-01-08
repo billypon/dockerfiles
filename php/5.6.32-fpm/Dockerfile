@@ -13,3 +13,5 @@ RUN apk add --no-cache php5-bcmath php5-bz2 php5-calendar php5-exif php5-gd php5
     #wget http://downloads.zend.com/guard/7.0.0/zend-loader-php5.6-linux-x86_64_update1.tar.gz -O - | tar zx -C /tmp && \
     #cp /tmp/zend-loader-*/ZendGuardLoader.so /usr/local/lib/php/extensions/* && \
     #rm -rf /tmp/zend-loader-* && \
+
+    sleep 0
