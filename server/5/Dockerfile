@@ -46,8 +46,8 @@ RUN yum install -y epel-release yum-utils make gcc autoconf automake && \
     gpasswd -a redis www && \
 
     # node
-    curl -sL https://rpm.nodesource.com/setup_6.x | bash && \
-    yum install -y nodejs && \
+    curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.33.4/install.sh | bash && \
+    rm -rf ~/.nvm && \
 
     # dotnet(/usr/lib/dotnet)
 
