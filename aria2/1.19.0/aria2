@@ -1,0 +1,7 @@
+#!/bin/sh
+
+[ $RPC_SECRET ] && [ ! "$(grep rpc-secret /etc/aria2.conf)" ] && echo rpc-secret=$RPC_SECRET >> /etc/aria2.conf
+
+touch /data/aria2.session
+
+aria2 --conf-path=/etc/aria2.conf
