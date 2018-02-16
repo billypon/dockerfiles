@@ -9,5 +9,5 @@ RUN apk add --no-cache darkhttpd && \
     sleep 0
 
 WORKDIR /webui-aria2
-EXPOSE 8080
-CMD ["darkhttpd", "/webui-aria2", "8080"]
+EXPOSE 8888
+CMD ["darkhttpd", "/webui-aria2", "8888"]
