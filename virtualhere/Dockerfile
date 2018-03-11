@@ -8,4 +8,4 @@ RUN wget http://www.virtualhere.com/sites/default/files/usbserver/vhusbdx86_64 -
     chmod +x /usr/sbin/vhusbdx86_64
 
 EXPOSE 7575
-CMD ["vhusbdx86_64", "-c", "/etc/virtualhere/config.ini", "-r", "/var/log/virtualhere.log"]
+CMD ["vhusbdx86_64", "-c", "/etc/virtualhere/config.ini"]
