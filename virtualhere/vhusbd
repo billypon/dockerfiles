@@ -1,0 +1,5 @@
+#!/bin/sh
+
+touch /var/log/virtualhere.log
+tail /var/log/virtualhere.log -n0 -f &
+vhusbdx86_64 -c /etc/virtualhere/config.ini -r /var/log/virtualhere.log
