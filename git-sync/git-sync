@@ -1,0 +1,29 @@
+#!/bin/sh
+
+prefix=/home/git
+
+sync_repo()
+{
+	repo=$1
+	dir=$prefix/$2
+	[ -d $dir ] || git clone --mirror $repo $dir
+	echo -n "$2: "
+	cd $dir
+	git remote update
+}
+
+OPTIND=1
+while getopts "dsc" opt; do
+	case $opt in
+		d) date=1 ;;
+		s) scan=1 ;;
+		c) cron=1 ;;
+	esac
+done
+shift $((OPTIND-1))
+
+[ ~/.git-sync ] && . ~/.git-sync
+while [ $cron ]; do
+	sleep 1d
+	[ ~/.git-sync ] && . ~/.git-sync
+done
