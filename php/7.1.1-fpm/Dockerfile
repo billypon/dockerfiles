@@ -8,7 +8,7 @@ RUN apk add --no-cache \
 
     && docker-php-ext-configure gd --with-jpeg-dir=/usr/include --with-webp-dir=/usr/include --with-freetype-dir=usr/include \
     && pecl bundle -d /usr/src/php/ext redis \
-    && docker-php-ext-install bcmath bz2 calendar exif gd gettext intl mcrypt mysqli pcntl sockets zip redis \
+    && docker-php-ext-install bcmath bz2 calendar exif gd gettext intl mcrypt mysqli pdo_mysql pcntl sockets zip redis \
 
     && apk del \
         gettext-dev icu-dev libmcrypt-dev zlib-dev bzip2-dev \
