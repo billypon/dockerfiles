@@ -5,6 +5,7 @@ RUN apk add --no-cache \
         libintl icu-libs libmcrypt libbz2 libpng libjpeg-turbo libwebp freetype \
         gettext-dev icu-dev libmcrypt-dev zlib-dev bzip2-dev \
         libpng-dev libjpeg-turbo-dev libwebp-dev freetype-dev \
+		openssl \
 		openldap openldap-dev \
 
     && docker-php-ext-configure gd --with-jpeg-dir=/usr/include --with-webp-dir=/usr/include --with-freetype-dir=usr/include \
