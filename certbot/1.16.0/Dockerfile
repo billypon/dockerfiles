@@ -6,4 +6,4 @@ ADD certbot /certbot
 RUN apk add --no-cache grep curl jq
 
 WORKDIR /certbot
-ENTRYPOINT /certbot/certbot
+ENTRYPOINT [ "/certbot/certbot" ]

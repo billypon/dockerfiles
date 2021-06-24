@@ -9,8 +9,13 @@ mkdir -p $certs
 code=1
 
 certonly() {
-	certbot certonly -d "$1" -n || exit 2
-	[ -f $certs/$1.crt ] && cmp -s $certs/$1.crt $letsencrypt/live/$1/fullchain.pem && return
+	certbot certonly -d "$1" --agree-tos -n || exit 2
+	[ 1 ] && \
+		[ -f $certs/$1.crt ] && \
+		[ -f $certs/$1.key ] && \
+		cmp -s $certs/$1.crt $letsencrypt/live/$1/fullchain.pem && \
+		cmp -s $certs/$1.key $letsencrypt/live/$1/privkey.pem && \
+		return
 	cp $letsencrypt/live/$1/fullchain.pem $certs/$1.crt
 	cp $letsencrypt/live/$1/privkey.pem $certs/$1.key
 	code=0
