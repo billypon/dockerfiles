@@ -1,0 +1,8 @@
+CONFIG=~/.config/letsencrypt/dnspod
+
+[ -f $CONFIG ] || exit 1
+
+ID=`grep -oP '(?<=id=).*' $CONFIG`
+TOKEN=`grep -oP '(?<=token=).*' $CONFIG`
+
+LOGIN_TOKEN="login_token=$ID,$TOKEN"

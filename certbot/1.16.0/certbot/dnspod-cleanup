@@ -1,0 +1,14 @@
+#!/bin/sh
+
+. dns-dnspod
+
+DOMAIN=`echo $CERTBOT_DOMAIN | grep -oP '[^.]+\.[^.]+$'`
+LOG_DIR=/tmp/CERTBOT_$CERTBOT_DOMAIN
+
+[ -f $LOG_DIR/RECORD_ID ] || exit 2
+RECORD_ID=`cat $LOG_DIR/RECORD_ID`
+
+echo clean record $RECORD_ID of domain $DOMAIN
+curl -sS -X POST -d "$LOGIN_TOKEN&format=json&domain=$DOMAIN&record_id=$RECORD_ID" https://dnsapi.cn/Record.Remove > $LOG_DIR/cleanup.log || exit 1
+
+rm -rf $LOG_DIR

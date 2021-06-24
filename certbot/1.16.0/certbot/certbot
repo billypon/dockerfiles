@@ -1,0 +1,29 @@
+#!/bin/sh
+
+certbot=/certbot
+letsencrypt=/etc/letsencrypt
+certs=$letsencrypt/certs
+
+mkdir -p $certs
+
+code=1
+
+certonly() {
+	certbot certonly -d "$1" -n || exit 2
+	[ -f $certs/$1.crt ] && cmp -s $certs/$1.crt $letsencrypt/live/$1/fullchain.pem && return
+	cp $letsencrypt/live/$1/fullchain.pem $certs/$1.crt
+	cp $letsencrypt/live/$1/privkey.pem $certs/$1.key
+	code=0
+}
+
+if [ $# != 0 ]; then
+	for domain in $*; do
+		certonly $domain
+	done
+elif [ -f ~/.config/letsencrypt/domains ]; then
+	while read domain; do
+		certonly $domain
+	done < ~/.config/letsencrypt/domains
+fi
+
+exit $code
