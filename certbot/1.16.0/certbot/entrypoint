@@ -1,0 +1,14 @@
+#!/bin/sh
+
+log=/var/log/certbot
+
+if [ "$1" = certonly ]; then
+	shift
+	certonly $*
+else
+	if [ ! -p $log ]; then
+		rm $log
+		mkfifo $log
+	fi
+	tail -f $log
+fi

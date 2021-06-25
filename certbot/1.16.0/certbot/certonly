@@ -1,0 +1,47 @@
+#!/bin/sh
+
+letsencrypt=/etc/letsencrypt
+certs=$letsencrypt/certs
+config=~/.config/letsencrypt/domains
+log=/var/log/certbot
+
+mkdir -p $certs
+
+code=1
+
+if [ $# = 0 ]; then
+	if [ -f $config -a -s $config ]; then
+		$0 `cat $config | tr '\n' ' '`
+		exit $?
+	fi
+else
+	now="========== `date +"%Y-%m-%d %H:%M:%S"` ==========\n"
+	if [ -p $log ]; then
+		echo -e $now >> $log
+	else
+		echo -e $now
+	fi
+	for domain in $*; do
+		certbot certonly -d "$domain" --agree-tos -n 2>&1 | tee -a $log
+		if [ $? != 0 ]; then
+			code=2
+			break
+		fi
+
+		domain=${domain/\*./}
+
+		[ 1 ] && \
+			[ -f $certs/$domain.crt ] && \
+			[ -f $certs/$domain.key ] && \
+			cmp -s $certs/$domain.crt $letsencrypt/live/$domain/fullchain.pem && \
+			cmp -s $certs/$domain.key $letsencrypt/live/$domain/privkey.pem && \
+			continue
+
+		cp $letsencrypt/live/$domain/fullchain.pem $certs/$domain.crt
+		cp $letsencrypt/live/$domain/privkey.pem $certs/$domain.key
+		code=0
+	done
+	echo >> $log
+fi
+
+exit $code
