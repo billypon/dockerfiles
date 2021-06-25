@@ -3,6 +3,7 @@
 certbot=/certbot
 letsencrypt=/etc/letsencrypt
 certs=$letsencrypt/certs
+config=~/.config/letsencrypt/domains
 
 mkdir -p $certs
 
@@ -10,14 +11,15 @@ code=1
 
 certonly() {
 	certbot certonly -d "$1" --agree-tos -n || exit 2
+	domain=${1/\*./}
 	[ 1 ] && \
-		[ -f $certs/$1.crt ] && \
-		[ -f $certs/$1.key ] && \
-		cmp -s $certs/$1.crt $letsencrypt/live/$1/fullchain.pem && \
-		cmp -s $certs/$1.key $letsencrypt/live/$1/privkey.pem && \
+		[ -f $certs/$domain.crt ] && \
+		[ -f $certs/$domain.key ] && \
+		cmp -s $certs/$domain.crt $letsencrypt/live/$domain/fullchain.pem && \
+		cmp -s $certs/$domain.key $letsencrypt/live/$domain/privkey.pem && \
 		return
-	cp $letsencrypt/live/$1/fullchain.pem $certs/$1.crt
-	cp $letsencrypt/live/$1/privkey.pem $certs/$1.key
+	cp $letsencrypt/live/$domain/fullchain.pem $certs/$domain.crt
+	cp $letsencrypt/live/$domain/privkey.pem $certs/$domain.key
 	code=0
 }
 
@@ -25,10 +27,10 @@ if [ $# != 0 ]; then
 	for domain in $*; do
 		certonly $domain
 	done
-elif [ -f ~/.config/letsencrypt/domains ]; then
+elif [ -f $config ]; then
 	while read domain; do
 		certonly $domain
-	done < ~/.config/letsencrypt/domains
+	done < $config
 fi
 
 exit $code

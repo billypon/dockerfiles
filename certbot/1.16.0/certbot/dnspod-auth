@@ -3,7 +3,7 @@
 . dns-dnspod
 
 DOMAIN=`echo $CERTBOT_DOMAIN | grep -oP '[^.]+\.[^.]+$'`
-SUB_DOMAIN=`echo $CERTBOT_DOMAIN | sed -r 's/\.?[^.]+\.[^.]+$//'`
+SUB_DOMAIN=`echo $CERTBOT_DOMAIN | sed -r 's/\.?[^.]+\.[^.]+$|^\*\.//g'`
 LOG_DIR=/tmp/CERTBOT_$CERTBOT_DOMAIN
 
 if [ $SUB_DOMAIN ]; then
