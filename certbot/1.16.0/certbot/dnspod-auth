@@ -15,11 +15,11 @@ fi
 [ -d $LOG_DIR ] || mkdir -m 700 $LOG_DIR
 
 echo add domain ${SUB_DOMAIN}.${DOMAIN}: $CERTBOT_VALIDATION
-curl -sS -X POST -d "$LOGIN_TOKEN&format=json&domain=$DOMAIN&sub_domain=$SUB_DOMAIN&record_type=TXT&record_line_id=0&value=$CERTBOT_VALIDATION" https://dnsapi.cn/Record.Create > $LOG_DIR/dns.log || exit 1
-RECORD_ID=`cat $LOG_DIR/dns.log | jq -r .record.id | tee $LOG_DIR/RECORD_ID`
+curl -sS -X POST -d "$LOGIN_TOKEN&format=json&domain=$DOMAIN&sub_domain=$SUB_DOMAIN&record_type=TXT&record_line_id=0&value=$CERTBOT_VALIDATION" https://dnsapi.cn/Record.Create > $LOG_DIR/auth.log || exit 1
+RECORD_ID=`cat $LOG_DIR/auth.log | jq -r .record.id | tee $LOG_DIR/RECORD_ID`
 
 if [ $RECORD_ID = null ]; then
-	cat $LOG_DIR/dns.log | jq -r .status.message
+	cat $LOG_DIR/auth.log | jq -r .status.message
 	exit 2
 fi
 
