@@ -9,17 +9,19 @@ RUN apk add --no-cache \
         libpng-dev libjpeg-turbo-dev libwebp-dev freetype-dev \
 		openssl \
 		openldap openldap-dev \
+		gmp-dev \
 
     && docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype \
     && docker-php-ext-configure ldap \
     && pecl bundle -d /usr/src/php/ext mcrypt \
     && pecl bundle -d /usr/src/php/ext redis \
-    && docker-php-ext-install bcmath bz2 calendar exif gd gettext intl mcrypt mysqli pdo_mysql pcntl sockets zip redis ldap \
+    && docker-php-ext-install bcmath bz2 calendar exif gd gettext intl mcrypt mysqli pdo_mysql pcntl sockets zip redis ldap opcache gmp \
 
     && apk del \
         gettext-dev icu-dev libmcrypt-dev libzip-dev zlib-dev bzip2-dev \
         libpng-dev libjpeg-turbo-dev libwebp-dev freetype-dev \
 		openldap-dev \
+		gmp-dev \
     
     && rm -rf /tmp/pear/cache \
 
