@@ -9,7 +9,7 @@ RUN apk add --no-cache \
         libpng-dev libjpeg-turbo-dev libwebp-dev freetype-dev \
         openssl \
         openldap openldap-dev \
-        gmp-dev \
+        libgmpxx gmp-dev \
 
     && docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype \
     && docker-php-ext-configure ldap \
