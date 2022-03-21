@@ -7,9 +7,9 @@ RUN apk add --no-cache \
         libintl icu-libs libmcrypt libzip libbz2 libpng libjpeg-turbo libwebp freetype \
         gettext-dev icu-dev libmcrypt-dev libzip-dev zlib-dev bzip2-dev \
         libpng-dev libjpeg-turbo-dev libwebp-dev freetype-dev \
-		openssl \
-		openldap openldap-dev \
-		gmp-dev \
+        openssl \
+        openldap openldap-dev \
+        gmp-dev \
 
     && docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype \
     && docker-php-ext-configure ldap \
@@ -20,9 +20,9 @@ RUN apk add --no-cache \
     && apk del \
         gettext-dev icu-dev libmcrypt-dev libzip-dev zlib-dev bzip2-dev \
         libpng-dev libjpeg-turbo-dev libwebp-dev freetype-dev \
-		openldap-dev \
-		gmp-dev \
-    
+        openldap-dev \
+        gmp-dev \
+
     && rm -rf /tmp/pear/cache \
 
-	&& wget -O /usr/local/bin/composer https://getcomposer.org/download/$COMPOSER_VERSION/composer.phar && chmod +x /usr/local/bin/composer
+    && wget -O /usr/local/bin/composer https://getcomposer.org/download/$COMPOSER_VERSION/composer.phar && chmod +x /usr/local/bin/composer
